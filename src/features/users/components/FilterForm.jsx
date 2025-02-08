@@ -27,7 +27,7 @@ const FilterForm = React.memo(
     handleSubmit,
   }) => {
     return (
-      <form onClick={handleSubmit}>
+      <form>
         <Box
           display='flex'
           flexWrap='wrap'
@@ -56,11 +56,10 @@ const FilterForm = React.memo(
               labelId='genders-picker'
               multiple
               value={genders}
-              onClick={(e) => e.preventDefault()}
               onChange={(event) => {
                 const value = event.target.value;
 
-                if (JSON.stringify(value) === JSON.stringify(genders)) return; // ✅ Prevent redundant state update
+                if (JSON.stringify(value) === JSON.stringify(genders)) return; //Compares values to prevent unnecessary re-renders
 
                 setGenders(value);
               }}>
@@ -85,7 +84,11 @@ const FilterForm = React.memo(
               ))}
             </Select>
           </FormControl>
-          <Button variant='contained' color='primary' type='submit'>
+          <Button
+            variant='contained'
+            color='primary'
+            type='submit'
+            onClick={handleSubmit}>
             Search
           </Button>
         </Box>

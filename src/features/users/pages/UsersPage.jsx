@@ -10,20 +10,13 @@ const UsersPage = () => {
   const [numberOfUsers, setNumberOfUsers] = useState(0);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [searchParams, setSearchParams] = useState({
-    genders: [],
-    nationalities: [],
-    numberOfUsers: 0,
-  });
 
-  const memoizedParams = useMemo(
-    () => ({
-      genders: [...genders], // Deep copy ensures stability
-      nationalities: [...nationalities],
-      numberOfUsers,
-    }),
-    [genders, nationalities, numberOfUsers]
-  );
+  const memoizedParams = useMemo(() => ({
+    //useMemo because we want to avoid unnecessart re-renders and cache the values
+    genders: [...genders],
+    nationalities: [...nationalities],
+    numberOfUsers,
+  }));
 
   const { users, loading, error, handleLoadMore, fetchUsersData } =
     useFetchUsers(memoizedParams);
@@ -38,12 +31,6 @@ const UsersPage = () => {
   //the searchParams are different, but "randomuser" is for generating new users, so we'll give this functionality some flexibility
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSearchParams((prev) => ({
-      ...prev,
-      genders: [...genders],
-      nationalities: [...nationalities],
-      numberOfUsers,
-    }));
     fetchUsersData(true);
   };
 

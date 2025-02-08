@@ -1,4 +1,5 @@
 import { BASE_URL, PAGE_SIZE } from '../constants/formFieldOptions';
+import axios from 'axios';
 
 /*
 A file to hold the endpoints associated with the UsersPage. getUsers is dynamically creating the endpoint
@@ -9,7 +10,7 @@ for customization, a true optimization, or a need to avoid reliance on a depende
 as a installable module)
 */
 export const apiEndpoints = {
-  getUsers: (genders, nationalities, numberOfUsers, page) => {
+  getUsers: async (genders, nationalities, numberOfUsers, page) => {
     const params = new URLSearchParams();
 
     if (genders.length)
@@ -17,13 +18,14 @@ export const apiEndpoints = {
     if (nationalities.length) params.append('nat', nationalities.join(','));
 
     if (numberOfUsers > 0) {
-      const actualNumberOfUsersShown = Math.min(PAGE_SIZE, numberOfUsers);
-      params.append('results', actualNumberOfUsersShown.toString());
+      if (PAGE_SIZE <= numberOfUsers)
+        params.append('results', PAGE_SIZE.toString());
+      else params.append('results', numberOfUsers.toString());
     }
 
     params.append('page', page.toString());
 
-    console.log(decodeURIComponent(`${BASE_URL}?${params.toString()}`));
-    return `${BASE_URL}?${params.toString()}`;
+    const response = await axios.get(`${BASE_URL}?${params.toString()}`);
+    return response.data.results;
   },
 };

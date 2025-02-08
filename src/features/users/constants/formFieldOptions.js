@@ -29,7 +29,7 @@ export const NATIONALITY_OPTIONS = [
   'UA',
   'US',
 ];
-export const NUMBER_OF_USERS_SIZE_LIMIT_LOWERBOUND = 1;
-export const NUMBER_OF_USERS_SIZE_LIMIT_UPPERBOUND = 5000;
-export const BASE_URL = 'https://randomuser.me/api/';
-export const PAGE_SIZE = 10;
+export const NUMBER_OF_USERS_SIZE_LIMIT_LOWERBOUND = 1; //Lowest number of users that can be requested
+export const NUMBER_OF_USERS_SIZE_LIMIT_UPPERBOUND = 5000; //The highest
+export const BASE_URL = 'https://randomuser.me/api/'; //Base URL for the API
+export const PAGE_SIZE = 10; //The current limitation of entries per page for the API
